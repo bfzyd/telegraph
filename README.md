@@ -1,8 +1,9 @@
+```markdown
 🎉基于R2储存的图床/视频床/文件床项目已完成，欢迎部署测试👉[JSimages](https://github.com/0-RTT/JSimages)
 
 # Telegraph图床
 
-基于 Cloudflare Worker 和 Pages 以及 Telegram Bot API 的图床/视频床/文件床服务
+基于 Cloudflare Worker 和 Telegram Bot API 的图床/视频床/文件床服务
 
 ## 功能特点
 
@@ -13,6 +14,7 @@
 - 📁 支持所有文件格式上传（图片、视频、文档等）
 - 📤 支持多文件上传、拖拽上传和粘贴上传（Ctrl+V）
 - 🔄 哈希校验避免重复上传
+- 🏷️ 支持快照上传与场景关联（`prompt_hash`），可基于场景 ID 快速查找图片
 
 ### 管理功能
 - 📋 支持查看本地历史记录
@@ -37,6 +39,7 @@
 
 > **最近更新**: 2026-01-19
 > - 使用Claude优化了一下代码
+> - 优化数据库结构：新增 `prompt_hash`、`created_at` 字段及索引，支持快照功能与高效时间排序
 
 <details>
 <summary>历史更新记录</summary>
@@ -148,14 +151,7 @@
 4. 创建数据表:
    - 点击数据库名称进入详情页
    - 选择 `控制台` 标签
-   - 执行下 SQL 语句:
-```sql
-CREATE TABLE media (
-    url TEXT PRIMARY KEY,
-    fileId TEXT NOT NULL
-);
-```
-针对修改后的Workers文件需要执行下 SQL 语句
+   - 执行下 SQL 语句（已包含新字段及性能索引）:
 ```sql
 CREATE TABLE IF NOT EXISTS media (
   url          TEXT PRIMARY KEY,
@@ -167,6 +163,7 @@ CREATE TABLE IF NOT EXISTS media (
 CREATE INDEX IF NOT EXISTS idx_media_prompt_hash ON media(prompt_hash);
 CREATE INDEX IF NOT EXISTS idx_media_created_at  ON media(created_at DESC);
 ```
+
 ### 5. 创建 Worker
 1. 进入 `Workers & Pages`
 2. 点击 `创建`
@@ -203,7 +200,7 @@ CREATE INDEX IF NOT EXISTS idx_media_created_at  ON media(created_at DESC);
 
 ### 9. 部署代码
 1. 进入你的worker项目 → 点击编辑代码
-2. 将 `_worker.js` 的完整代码复制粘贴到编辑器中
+2. 将 `worker.js` 的完整代码复制粘贴到编辑器中
 3. 点击 `部署`
 
 ## 开源协议
@@ -214,3 +211,4 @@ MIT License
 
 - [NodeSupport](https://github.com/NodeSeekDev/NodeSupport)
 - [![yxvm_support.png](https://kycloud3.koyoo.cn/20250411e0a01202504111413152588.png)](https://yxvm.com/)
+```
