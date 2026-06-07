@@ -1,4 +1,3 @@
-```markdown
 🎉基于R2储存的图床/视频床/文件床项目已完成，欢迎部署测试👉[JSimages](https://github.com/0-RTT/JSimages)
 
 # Telegraph图床
@@ -211,4 +210,3 @@ MIT License
 
 - [NodeSupport](https://github.com/NodeSeekDev/NodeSupport)
 - [![yxvm_support.png](https://kycloud3.koyoo.cn/20250411e0a01202504111413152588.png)](https://yxvm.com/)
-```
